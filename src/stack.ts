@@ -3,24 +3,21 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import { Construct } from 'constructs';
 
-export class TailscaleExitNodeStack extends cdk.Stack {
+export class TailscaleExitNode extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const vpc = new ec2.Vpc(this, 'tailscale-vpc', {
+        const vpc = new ec2.Vpc(this, 'VPC', {
             maxAzs: 3,
             natGateways: 0,
-            subnetConfiguration: [
-                {
-                    cidrMask: 24,
-                    name: 'tailscale-subnet',
-                    subnetType: ec2.SubnetType.PUBLIC
-                }
-            ],
-            vpcName: 'tailscale-vpc'
+            subnetConfiguration: [{
+                cidrMask: 24,
+                name: 'Public',
+                subnetType: ec2.SubnetType.PUBLIC
+            }]
         });
 
-        new ecs.Cluster(this, 'tailscale-cluster', {
+        new ecs.Cluster(this, 'Cluster', {
             vpc: vpc
         });
     }
