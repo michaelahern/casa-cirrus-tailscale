@@ -1,0 +1,29 @@
+{
+  "name": "tailscale-exit-node",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm run lint && tsc",
+    "cdk": "cdk",
+    "clean": "rimraf ./lib",
+    "lint": "eslint src/**/*.ts --max-warnings=0",
+    "lint-fix": "eslint src/**/*.ts --max-warnings=0 --fix"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "~2.202",
+    "constructs": "^10"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^4",
+    "@types/node": "^22",
+    "aws-cdk": "~2.1019",
+    "eslint": "^9",
+    "rimraf": "^6",
+    "tsx": "^4",
+    "typescript": "~5.8",
+    "typescript-eslint": "^8"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
