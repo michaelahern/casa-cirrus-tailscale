@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run lint && tsc",
     "cdk": "cdk",
-    "clean": "rimraf ./lib",
+    "clean": "rimraf ./cdk.out ./dist",
     "lint": "eslint src/**/*.ts --max-warnings=0",
     "lint-fix": "eslint src/**/*.ts --max-warnings=0 --fix"
   },
