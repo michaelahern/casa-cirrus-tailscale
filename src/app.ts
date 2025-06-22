@@ -4,10 +4,10 @@ import { TailscaleRouterNodeStack } from './router-node-stack.js';
 
 const app = new cdk.App();
 
-new TailscaleRouterNodeStack(app, 'TailscaleRouterNode', {
+new TailscaleExitNodeStack(app, 'TailscaleExitNode', {
     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });
 
-new TailscaleExitNodeStack(app, 'TailscaleExitNode', {
+new TailscaleRouterNodeStack(app, 'TailscaleRouterNode', {
     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });
