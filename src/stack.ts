@@ -28,8 +28,8 @@ export class TailscaleExitNodeStack extends cdk.Stack {
         });
 
         const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'TailscaleTask', {
-            cpu: 2048,
-            memoryLimitMiB: 4096,
+            cpu: 1024,
+            memoryLimitMiB: 2048,
             runtimePlatform: {
                 cpuArchitecture: ecs.CpuArchitecture.ARM64,
                 operatingSystemFamily: ecs.OperatingSystemFamily.LINUX
@@ -50,9 +50,11 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             healthCheck: {
                 command: [
                     'CMD-SHELL',
-                    'wget --spider -q http://127.0.0.1:9002/healthz >> /proc/1/fd/1 2>&1 || exit 1'
+                    'wget --spider -q http://127.0.0.1:9002/healthz'
                 ],
-                startPeriod: cdk.Duration.seconds(10)
+                interval: cdk.Duration.seconds(30),
+                startPeriod: cdk.Duration.seconds(30),
+                timeout: cdk.Duration.seconds(5)
             },
             logging: ecs.LogDrivers.awsLogs({
                 streamPrefix: 'ecs',
@@ -73,7 +75,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             desiredCount: 1,
             maxHealthyPercent: 200,
             minHealthyPercent: 100,
-            healthCheckGracePeriod: cdk.Duration.seconds(30),
+            healthCheckGracePeriod: cdk.Duration.minutes(1),
             circuitBreaker: {
                 enable: true,
                 rollback: true
