@@ -23,7 +23,8 @@ export class TailscaleExitNodeStack extends cdk.Stack {
         });
 
         const ecsCluster = new ecs.Cluster(this, 'Cluster', {
-            vpc: vpc
+            vpc: vpc,
+            containerInsightsV2: ecs.ContainerInsights.ENHANCED
         });
 
         const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'TailscaleTask', {
