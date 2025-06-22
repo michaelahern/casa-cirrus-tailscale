@@ -8,10 +8,6 @@ export class TailscaleExitNodeStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        new secretsmanager.Secret(this, 'AuthKey', {
-            secretName: 'tailscale/casa-cloud-exit/auth-key'
-        });
-
         const vpc = new ec2.Vpc(this, 'VPC', {
             maxAzs: 3,
             natGateways: 0,
