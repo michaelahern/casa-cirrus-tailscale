@@ -38,7 +38,7 @@ export class TailscaleRouterNodeStack extends cdk.Stack {
             image: ecs.ContainerImage.fromRegistry('ghcr.io/tailscale/tailscale:latest'),
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
-                TS_EXTRA_ARGS: '--advertise-exit-node',
+                TS_EXTRA_ARGS: '--advertise-exit-node --advertise-tags=tag:casa-cirrus',
                 TS_HOSTNAME: `casa-cirrus-router-${this.region}`,
                 TS_ROUTES: '192.168.1.0/24,192.168.20.0/24,192.168.180.0/24'
             },
