@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
 import { TailscaleExitNodeStack } from './stack.js';
 
