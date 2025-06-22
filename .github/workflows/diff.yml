@@ -36,6 +36,9 @@ jobs:
           AWS_DEFAULT_REGION: ${{ matrix.region }}
   diff-router:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        region: [ us-east-2 ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,4 +49,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          AWS_DEFAULT_REGION: us-east-2
+          AWS_DEFAULT_REGION: ${{ matrix.region }}
