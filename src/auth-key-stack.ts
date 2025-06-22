@@ -7,7 +7,7 @@ export class TailscaleAuthKeyStack extends cdk.Stack {
         super(scope, id, props);
 
         new secretsmanager.Secret(this, 'AuthKeySecret', {
-            secretName: 'tailscale/casa-cirrus',
+            secretName: 'tailscale/auth-key',
             replicaRegions: [
                 { region: 'us-east-1' },
                 { region: 'us-west-2' }

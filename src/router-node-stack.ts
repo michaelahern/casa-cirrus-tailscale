@@ -43,7 +43,7 @@ export class TailscaleRouterNodeStack extends cdk.Stack {
                 TS_ROUTES: '192.168.1.0/24,192.168.20.0/24,192.168.180.0/24'
             },
             secrets: {
-                TS_AUTH_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'TailscaleAuthKey', 'tailscale/casa-cirrus'))
+                TS_AUTH_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'TailscaleAuthKey', 'tailscale/auth-key'))
             },
             essential: true,
             healthCheck: {
