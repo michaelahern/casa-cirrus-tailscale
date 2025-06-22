@@ -24,7 +24,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             vpc: vpc
         });
 
-        const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'Tailscale', {
+        const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'ContainerTaskDef', {
             cpu: 2048,
             memoryLimitMiB: 4096,
             runtimePlatform: {
@@ -33,7 +33,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             }
         });
 
-        ecsTaskDefinition.addContainer('Tailscale', {
+        ecsTaskDefinition.addContainer('Container', {
             image: ecs.ContainerImage.fromRegistry('ghcr.io/tailscale/tailscale:latest'),
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
@@ -58,7 +58,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             restartAttemptPeriod: cdk.Duration.minutes(5)
         });
 
-        const ecsService = new ecs.FargateService(this, 'TailscaleService', {
+        const ecsService = new ecs.FargateService(this, 'Service', {
             cluster: ecsCluster,
             desiredCount: 1,
             taskDefinition: ecsTaskDefinition
