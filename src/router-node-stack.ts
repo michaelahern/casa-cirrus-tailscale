@@ -16,6 +16,9 @@ export class TailscaleRouterNodeStack extends cdk.Stack {
                 cidrMask: 26,
                 name: 'Public',
                 subnetType: ec2.SubnetType.PUBLIC
+            }],
+            vpnRoutePropagation: [{
+                subnetType: ec2.SubnetType.PUBLIC
             }]
         });
 
