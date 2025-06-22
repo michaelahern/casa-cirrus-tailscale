@@ -72,16 +72,15 @@ export class TailscaleRouterNodeStack extends cdk.Stack {
         const ecsService = new ecs.FargateService(this, 'TailscaleService', {
             cluster: ecsCluster,
             desiredCount: 1,
-            maxHealthyPercent: 200,
-            minHealthyPercent: 100,
+            maxHealthyPercent: 100,
+            minHealthyPercent: 0,
             healthCheckGracePeriod: cdk.Duration.minutes(1),
             circuitBreaker: {
                 enable: true,
                 rollback: true
             },
             taskDefinition: ecsTaskDefinition,
-            assignPublicIp: true,
-            availabilityZoneRebalancing: ecs.AvailabilityZoneRebalancing.ENABLED
+            assignPublicIp: true
         });
 
         ecsService.connections.allowInternally(ec2.Port.tcp(9002));
