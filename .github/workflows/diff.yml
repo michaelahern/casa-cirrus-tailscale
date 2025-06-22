@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  diff:
+  diff-exit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -16,7 +16,23 @@ jobs:
         with:
           node-version: 24.x
       - run: npm ci
-      - run: npm run cdk diff
+      - run: npm run cdk diff TailscaleExitNode
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_DEFAULT_REGION: ${{ matrix.region }}
+  diff-router:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        region: [ us-east-2 ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+      - run: npm ci
+      - run: npm run cdk diff TailscaleRouterNode
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}

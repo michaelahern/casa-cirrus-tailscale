@@ -1,5 +1,5 @@
 {
-  "name": "tailscale-exit-node",
+  "name": "casa-cirrus-tailscale",
   "version": "1.0.0",
   "type": "module",
   "scripts": {

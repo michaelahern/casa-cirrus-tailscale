@@ -1,4 +1,4 @@
-# InukiNet Tailscale Exit Nodes in Casa Cirrus
+# Casa Cirrus Tailscale Nodes for InukiNet
 
 Tailscale Docs
  * [Exit Nodes](https://tailscale.com/kb/1103/exit-nodes)
