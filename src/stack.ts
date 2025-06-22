@@ -69,8 +69,8 @@ export class TailscaleExitNodeStack extends cdk.Stack {
         const ecsService = new ecs.FargateService(this, 'TailscaleService', {
             cluster: ecsCluster,
             desiredCount: 1,
-            maxHealthyPercent: 200,
-            minHealthyPercent: 100,
+            maxHealthyPercent: 0,
+            minHealthyPercent: 0,
             healthCheckGracePeriod: cdk.Duration.minutes(1),
             circuitBreaker: {
                 enable: true,
