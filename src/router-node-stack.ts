@@ -17,9 +17,7 @@ export class TailscaleRouterNodeStack extends cdk.Stack {
                 name: 'Public',
                 subnetType: ec2.SubnetType.PUBLIC
             }],
-            vpnRoutePropagation: [{
-                subnetType: ec2.SubnetType.PUBLIC
-            }]
+            vpnGateway: true
         });
 
         const ecsCluster = new ecs.Cluster(this, 'Cluster', {
