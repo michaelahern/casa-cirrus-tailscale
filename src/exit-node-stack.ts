@@ -36,7 +36,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             image: ecs.ContainerImage.fromRegistry('ghcr.io/tailscale/tailscale:latest'),
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
-                TS_EXTRA_ARGS: '--advertise-exit-node',
+                TS_EXTRA_ARGS: '--advertise-exit-node --advertise-tags=tag:casa-cirrus',
                 TS_HOSTNAME: `casa-cirrus-exit-${this.region}`
             },
             secrets: {
