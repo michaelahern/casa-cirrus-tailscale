@@ -8,7 +8,9 @@ export class TailscaleExitNodeStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const authKeySecret = new secretsmanager.Secret(this, 'AuthKey');
+        const authKeySecret = new secretsmanager.Secret(this, 'AuthKey', {
+            secretName: 'tailscale/casa-cloud-exit/auth-key'
+        });
 
         const vpc = new ec2.Vpc(this, 'VPC', {
             maxAzs: 3,
@@ -24,7 +26,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             vpc: vpc
         });
 
-        const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'ContainerTaskDef', {
+        const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'TailscaleTask', {
             cpu: 2048,
             memoryLimitMiB: 4096,
             runtimePlatform: {
@@ -33,7 +35,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             }
         });
 
-        ecsTaskDefinition.addContainer('Container', {
+        ecsTaskDefinition.addContainer('Tailscale', {
             image: ecs.ContainerImage.fromRegistry('ghcr.io/tailscale/tailscale:latest'),
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
@@ -58,12 +60,22 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             restartAttemptPeriod: cdk.Duration.minutes(5)
         });
 
-        const ecsService = new ecs.FargateService(this, 'Service', {
+        const ecsService = new ecs.FargateService(this, 'TailscaleService', {
             cluster: ecsCluster,
             desiredCount: 1,
-            taskDefinition: ecsTaskDefinition
+            maxHealthyPercent: 200,
+            minHealthyPercent: 100,
+            healthCheckGracePeriod: cdk.Duration.seconds(30),
+            circuitBreaker: {
+                enable: true,
+                rollback: true
+            },
+            taskDefinition: ecsTaskDefinition,
+            assignPublicIp: true,
+            availabilityZoneRebalancing: ecs.AvailabilityZoneRebalancing.ENABLED
         });
 
         ecsService.connections.allowInternally(ec2.Port.tcp(9002));
+        ecsService.connections.allowToAnyIpv4(ec2.Port.allTraffic());
     }
 }
