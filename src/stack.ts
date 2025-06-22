@@ -8,7 +8,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const authKeySecret = new secretsmanager.Secret(this, 'AuthKey', {
+        new secretsmanager.Secret(this, 'AuthKey', {
             secretName: 'tailscale/casa-cloud-exit/auth-key'
         });
 
@@ -44,7 +44,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
                 TS_HOSTNAME: `casa-cloud-exit-${this.region}`
             },
             secrets: {
-                TS_AUTH_KEY: ecs.Secret.fromSecretsManager(authKeySecret)
+                TS_AUTH_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'TailscaleAuthKey', 'tailscale/casa-cloud'))
             },
             essential: true,
             healthCheck: {
