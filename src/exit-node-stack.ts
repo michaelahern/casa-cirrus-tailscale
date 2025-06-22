@@ -40,7 +40,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
                 TS_HOSTNAME: `casa-cirrus-exit-${this.region}`
             },
             secrets: {
-                TS_AUTH_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'TailscaleAuthKey', 'tailscale/auth-key'))
+                TS_AUTH_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'TailscaleAuthKey', 'tailscale/casa-cirrus-auth-key'))
             },
             essential: true,
             healthCheck: {
