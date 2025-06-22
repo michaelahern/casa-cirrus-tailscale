@@ -8,9 +8,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const authKeySecret = new secretsmanager.Secret(this, 'AuthKey', {
-            secretName: 'tailscale/casa-cloud-exit-node/auth-key'
-        });
+        const authKeySecret = new secretsmanager.Secret(this, 'AuthKey');
 
         const vpc = new ec2.Vpc(this, 'VPC', {
             maxAzs: 3,
@@ -22,24 +20,25 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             }]
         });
 
-        new ecs.Cluster(this, 'Cluster', {
+        const ecsCluster = new ecs.Cluster(this, 'Cluster', {
             vpc: vpc
         });
 
-        new ecs.FargateTaskDefinition(this, 'Tailscale', {
-            // executionRole
+        const ecsTaskDefinition = new ecs.FargateTaskDefinition(this, 'Tailscale', {
             cpu: 2048,
             memoryLimitMiB: 4096,
             runtimePlatform: {
                 cpuArchitecture: ecs.CpuArchitecture.ARM64,
                 operatingSystemFamily: ecs.OperatingSystemFamily.LINUX
             }
-        }).addContainer('tailscale', {
+        });
+
+        ecsTaskDefinition.addContainer('Tailscale', {
             image: ecs.ContainerImage.fromRegistry('ghcr.io/tailscale/tailscale:latest'),
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
                 TS_EXTRA_ARGS: '--advertise-exit-node',
-                TS_HOSTNAME: 'casa-cloud-exit-node'
+                TS_HOSTNAME: `casa-cloud-exit-${this.region}`
             },
             secrets: {
                 TS_AUTH_KEY: ecs.Secret.fromSecretsManager(authKeySecret)
@@ -54,7 +53,17 @@ export class TailscaleExitNodeStack extends cdk.Stack {
                 containerPort: 9002,
                 hostPort: 9002,
                 protocol: ecs.Protocol.TCP
-            }]
+            }],
+            enableRestartPolicy: true,
+            restartAttemptPeriod: cdk.Duration.minutes(5)
         });
+
+        const ecsService = new ecs.FargateService(this, 'TailscaleService', {
+            cluster: ecsCluster,
+            desiredCount: 1,
+            taskDefinition: ecsTaskDefinition
+        });
+
+        ecsService.connections.allowInternally(ec2.Port.tcp(9002));
     }
 }
