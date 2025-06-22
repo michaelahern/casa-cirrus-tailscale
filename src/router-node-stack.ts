@@ -76,8 +76,7 @@ export class TailscaleRouterNodeStack extends cdk.Stack {
             minHealthyPercent: 0,
             healthCheckGracePeriod: cdk.Duration.minutes(1),
             circuitBreaker: {
-                enable: true,
-                rollback: true
+                enable: true
             },
             taskDefinition: ecsTaskDefinition,
             assignPublicIp: true

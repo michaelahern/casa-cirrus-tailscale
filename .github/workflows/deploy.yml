@@ -20,7 +20,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_DEFAULT_REGION: us-east-2
   deploy-exit:
-    needs: deploy-auth
+    needs: [ deploy-auth ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -38,7 +38,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_DEFAULT_REGION: ${{ matrix.region }}
   deploy-router:
-    needs: deploy-auth
+    needs: [ deploy-auth, deploy-exit ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
