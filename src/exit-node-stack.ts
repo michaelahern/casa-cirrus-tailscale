@@ -77,8 +77,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
                 rollback: true
             },
             taskDefinition: ecsTaskDefinition,
-            assignPublicIp: true,
-            availabilityZoneRebalancing: ecs.AvailabilityZoneRebalancing.ENABLED
+            assignPublicIp: true
         });
 
         ecsService.connections.allowInternally(ec2.Port.tcp(9002));
