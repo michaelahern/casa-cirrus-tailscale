@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as cloudmap from 'aws-cdk-lib/aws-servicediscovery';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 
@@ -16,6 +17,10 @@ export class TailscaleExitNodeStack extends cdk.Stack {
                 name: 'Public',
                 subnetType: ec2.SubnetType.PUBLIC
             }]
+        });
+
+        const cloudMapNamespace = new cloudmap.PublicDnsNamespace(this, 'CloudMap', {
+            name: `$(this.region).aws.cirrus.casa`
         });
 
         const ecsCluster = new ecs.Cluster(this, 'Cluster', {
@@ -37,7 +42,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
                 TS_EXTRA_ARGS: '--advertise-exit-node',
-                TS_HOSTNAME: `casa-cloud-exit-${this.region}`
+                TS_HOSTNAME: `casa-cirrus-exit-${this.region}`
             },
             secrets: {
                 TS_AUTH_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'TailscaleAuthKey', 'tailscale/casa-cloud'))
@@ -72,6 +77,11 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             maxHealthyPercent: 200,
             minHealthyPercent: 100,
             healthCheckGracePeriod: cdk.Duration.minutes(1),
+            cloudMapOptions: {
+                name: `tailscale-exit`,
+                cloudMapNamespace: cloudMapNamespace,
+                dnsRecordType: cloudmap.DnsRecordType.A
+            },
             circuitBreaker: {
                 enable: true,
                 rollback: true
