@@ -46,6 +46,13 @@ export class TailscaleExitNodeStack extends cdk.Stack {
                 TS_AUTH_KEY: ecs.Secret.fromSecretsManager(authKeySecret)
             },
             essential: true,
+            healthCheck: {
+                command: [
+                    'CMD-SHELL',
+                    'wget --spider -q http://127.0.0.1:9002/healthz >> /proc/1/fd/1 2>&1 || exit 1'
+                ],
+                startPeriod: cdk.Duration.seconds(10)
+            },
             logging: ecs.LogDrivers.awsLogs({
                 streamPrefix: 'ecs',
                 logRetention: cdk.aws_logs.RetentionDays.ONE_MONTH,
