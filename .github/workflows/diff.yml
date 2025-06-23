@@ -18,7 +18,7 @@ jobs:
           node-version: 24.x
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::684209394034:role/GitHubActions
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: ${{ github.run_id }}
           aws-region: us-east-2
       - run: npm ci
@@ -35,7 +35,7 @@ jobs:
           node-version: 24.x
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::684209394034:role/GitHubActions
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: ${{ github.run_id }}
           aws-region: ${{ matrix.region }}
       - run: npm ci
@@ -52,7 +52,7 @@ jobs:
           node-version: 24.x
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::684209394034:role/GitHubActions
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: ${{ github.run_id }}
           aws-region: ${{ matrix.region }}
       - run: npm ci
