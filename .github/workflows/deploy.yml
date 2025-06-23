@@ -24,6 +24,9 @@ jobs:
           aws-region: us-east-2
       - run: npm ci
       - run: npm run cdk deploy TailscaleAuthKey
+      - run: aws secretsmanager put-secret-value --secret-id tailscale/casa-cirrus-auth-key --secret-string "$TS_AUTHKEY"
+        env:
+          TS_AUTHKEY: ${{ secrets.TS_AUTHKEY }}
   deploy-exit:
     needs: [ deploy-auth ]
     runs-on: ubuntu-latest
