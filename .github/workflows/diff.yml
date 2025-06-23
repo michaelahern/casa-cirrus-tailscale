@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   diff-auth:
     runs-on: ubuntu-latest
@@ -12,12 +16,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.x
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::684209394034:role/GitHubActions
+          role-session-name: ${{ github.run_id }}
+          aws-region: us-east-2
       - run: npm ci
       - run: npm run cdk diff TailscaleAuthKey
-        env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          AWS_DEFAULT_REGION: us-east-2
   diff-exit:
     runs-on: ubuntu-latest
     strategy:
@@ -28,12 +33,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.x
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::684209394034:role/GitHubActions
+          role-session-name: ${{ github.run_id }}
+          aws-region: ${{ matrix.region }}
       - run: npm ci
       - run: npm run cdk diff TailscaleExitNode
-        env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          AWS_DEFAULT_REGION: ${{ matrix.region }}
   diff-router:
     runs-on: ubuntu-latest
     strategy:
@@ -44,9 +50,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.x
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::684209394034:role/GitHubActions
+          role-session-name: ${{ github.run_id }}
+          aws-region: ${{ matrix.region }}
       - run: npm ci
       - run: npm run cdk diff TailscaleRouterNode
-        env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          AWS_DEFAULT_REGION: ${{ matrix.region }}
