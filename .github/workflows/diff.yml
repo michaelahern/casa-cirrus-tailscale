@@ -23,6 +23,16 @@ jobs:
           aws-region: us-east-2
       - run: npm ci
       - run: npm run cdk diff TailscaleAuthKey
+  diff-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tailscale/gitops-acl-action@v1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tailnet: ${{ secrets.TS_TAILNET }}
+          action: test
   diff-exit:
     runs-on: ubuntu-latest
     strategy:
