@@ -27,8 +27,18 @@ jobs:
       - run: aws secretsmanager put-secret-value --secret-id tailscale/casa-cirrus-auth-key --secret-string "$TS_AUTHKEY"
         env:
           TS_AUTHKEY: ${{ secrets.TS_AUTHKEY }}
+  deploy-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tailscale/gitops-acl-action@v1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tailnet: ${{ secrets.TS_TAILNET }}
+          action: apply
   deploy-exit:
-    needs: [ deploy-auth ]
+    needs: [ deploy-auth, deploy-policy ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,7 +57,7 @@ jobs:
       - run: npm ci
       - run: npm run cdk deploy TailscaleExitNode
   deploy-router:
-    needs: [ deploy-auth, deploy-exit ]
+    needs: [ deploy-auth, deploy-policy, deploy-exit ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
