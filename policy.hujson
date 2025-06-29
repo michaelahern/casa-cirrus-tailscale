@@ -21,11 +21,11 @@
 	"tests": [
 		{
 			"src":    "michaelahern@github",
-			"accept": ["192.168.1.1:443", "192.168.20.1:443", "192.168.180.1:443"],
+			"deny": ["192.168.1.1:443", "192.168.20.1:443", "192.168.180.1:443"],
 		},
 		{
 			"src":    "michaelahern@github",
-			"accept": ["tag:casa-canyaa:443", "tag:casa-mobilia:443", "tag:casa-cirrus:443"],
+			"deny": ["tag:casa-canyaa:443", "tag:casa-mobilia:443", "tag:casa-cirrus:443"],
 		},
 	],
 }
