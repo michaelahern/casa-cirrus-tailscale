@@ -1,10 +1,7 @@
 {
     "recommendations": [
+        "bierner.markdown-preview-github-styles",
         "dbaeumer.vscode-eslint",
-        "GitHub.codespaces",
-        "GitHub.copilot",
-        "GitHub.copilot-chat",
-        "github.vscode-github-actions",
-        "ms-vscode.remote-explorer"
+        "github.vscode-github-actions"
     ]
 }
