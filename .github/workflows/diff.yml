@@ -24,6 +24,7 @@ jobs:
       - run: npm ci
       - run: npm run cdk diff TailscaleAuthKey
   diff-policy:
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
