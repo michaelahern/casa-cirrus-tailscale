@@ -1,31 +1,31 @@
 {
   "autoApprovers": {
-    "routes": {
-      "192.168.1.0/24":   ["autogroup:admin", "tag:casa-cirrus"],
-      "192.168.20.0/24":  ["autogroup:admin", "tag:casa-cirrus"],
-      "192.168.180.0/24": ["autogroup:admin", "tag:casa-cirrus"],
+    "routes": {
+      "192.168.1.0/24":   ["autogroup:admin", "tag:casa-cirrus"],
+      "192.168.20.0/24":  ["autogroup:admin", "tag:casa-cirrus"],
+      "192.168.180.0/24": ["autogroup:admin", "tag:casa-cirrus"],
     },
-    "exitNode": ["autogroup:admin", "tag:casa-cirrus"],
+    "exitNode": ["autogroup:admin", "tag:casa-cirrus"],
   },
 
   "grants": [
-    { "src": ["autogroup:admin"], "dst": ["*"], "ip": ["*"] },
+    { "src": ["autogroup:admin"], "dst": ["*"], "ip": ["*"] },
   ],
 
   "tagOwners": {
-    "tag:casa-canyaa":  ["autogroup:admin"],
-    "tag:casa-mobilia": ["autogroup:admin"],
-    "tag:casa-cirrus":  ["autogroup:admin"],
+    "tag:casa-canyaa":  ["autogroup:admin"],
+    "tag:casa-mobilia": ["autogroup:admin"],
+    "tag:casa-cirrus":  ["autogroup:admin"],
   },
 
   "tests": [
-    {
-      "src":    "michaelahern@github",
-      "accept": ["192.168.1.1:443", "192.168.20.1:443", "192.168.180.1:443"],
-    },
-    {
-      "src":    "michaelahern@github",
-      "accept": ["tag:casa-canyaa:443", "tag:casa-mobilia:443", "tag:casa-cirrus:443"],
-    },
+    {
+      "src":    "michaelahern@github",
+      "accept": ["192.168.1.1:443", "192.168.20.1:443", "192.168.180.1:443"],
+    },
+    {
+      "src":    "michaelahern@github",
+      "accept": ["tag:casa-canyaa:443", "tag:casa-mobilia:443", "tag:casa-cirrus:443"],
+    },
   ],
 }
