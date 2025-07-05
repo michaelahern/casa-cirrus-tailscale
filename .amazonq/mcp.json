@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "aws-core": {
+      "command": "uvx",
+      "args": ["awslabs.core-mcp-server@latest"]
+    },
+    "aws-documentation": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"]
+    },
+    "aws-cdk": {
+      "command": "uvx",
+      "args": ["awslabs.cdk-mcp-server@latest"]
+    },
+    "aws-cost-analysis": {
+      "command": "uvx",
+      "args": ["awslabs.cost-analysis-mcp-server@latest"]
+    },
+    "aws-cost-explorer": {
+      "command": "uvx",
+      "args": ["awslabs.cost-explorer-mcp-server@latest"]
+    }
+  }
+}
