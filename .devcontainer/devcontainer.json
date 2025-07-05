@@ -1,11 +1,13 @@
 {
   "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22",
   "features": {
-    "ghcr.io/devcontainers/features/aws-cli:1": {}
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {}
   },
   "customizations": {
     "vscode": {
       "extensions": [
+        "amazonwebservices.amazon-q-vscode",
         "bierner.markdown-preview-github-styles",
         "dbaeumer.vscode-eslint",
         "github.vscode-github-actions"
