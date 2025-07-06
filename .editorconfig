@@ -6,8 +6,8 @@ end_of_line = lf
 indent_style = space
 insert_final_newline = true
 
-[{*.js,*.ts}]
+[*.{js,ts}]
 indent_size = 4
 
-[{*.json,*.md,*.yml}]
+[*.{json,md,yml}]
 indent_size = 2
