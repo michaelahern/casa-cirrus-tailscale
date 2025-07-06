@@ -46,7 +46,7 @@ export default ts.config([
         // https://github.com/eslint/json
         // https://github.com/ota-meshi/eslint-plugin-jsonc
         name: 'jsonc',
-        files: ['./.vscode/*.json', '**/tsconfig.json'],
+        files: ['**/*.jsonc', './.vscode/*.json', '**/tsconfig.json'],
         language: 'json/jsonc',
         extends: [json.configs.recommended, jsonc.configs['flat/recommended-with-jsonc']]
     },
