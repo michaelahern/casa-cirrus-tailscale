@@ -60,7 +60,7 @@ export default ts.config([
     {
         // https://github.com/ota-meshi/eslint-plugin-yml
         name: 'yml',
-        files: ['**/*.yml'],
+        files: ['**/*.yml', '**/*.yaml'],
         extends: [yml.configs['flat/recommended']]
     }
 ]);
