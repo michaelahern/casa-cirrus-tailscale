@@ -5,6 +5,7 @@
     "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": true,
     "@aws-cdk/core:checkSecretUsage": true,
     "@aws-cdk/core:enablePartitionLiterals": true,
+    "@aws-cdk/core:explicitStackTags": true,
     "@aws-cdk/core:includePrefixInUniqueNameGeneration": true,
     "@aws-cdk/core:target-partitions": [
       "aws"
