@@ -14,7 +14,7 @@ jobs:
     environment: auth
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22.x
       - uses: aws-actions/configure-aws-credentials@v4
@@ -47,7 +47,7 @@ jobs:
     environment: ${{ matrix.region }}
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22.x
       - uses: aws-actions/configure-aws-credentials@v4
@@ -66,7 +66,7 @@ jobs:
     environment: ${{ matrix.region }}
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22.x
       - uses: aws-actions/configure-aws-credentials@v4
