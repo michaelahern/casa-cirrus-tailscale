@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: auth
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: tailnet
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: tailscale/gitops-acl-action@v1
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_ID }}
@@ -46,7 +46,7 @@ jobs:
         region: [ us-east-1, us-west-2 ]
     environment: ${{ matrix.region }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
@@ -65,7 +65,7 @@ jobs:
         region: [ us-east-2 ]
     environment: ${{ matrix.region }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
