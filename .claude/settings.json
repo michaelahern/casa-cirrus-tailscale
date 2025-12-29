@@ -2,8 +2,7 @@
   "enableAllProjectMcpServers": true,
   "permissions": {
     "allow": [
-      "mcp__AWS_Knowledge__*",
-      "mcp__GitHub__*"
+      "mcp__AWS_Knowledge__*"
     ]
   }
 }
