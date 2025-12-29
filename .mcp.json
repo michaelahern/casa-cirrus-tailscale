@@ -3,14 +3,6 @@
     "AWS Knowledge": {
       "type": "http",
       "url": "https://knowledge-mcp.global.api.aws"
-    },
-    "GitHub": {
-      "type": "http",
-      "url": "https://api.githubcopilot.com/mcp",
-      "headers": {
-        "Authorization": "Bearer ${GITHUB_TOKEN}",
-        "X-MCP-Readonly": "true"
-      }
     }
   }
 }

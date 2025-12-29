@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "amazonwebservices.amazon-q-vscode",
     "bierner.markdown-preview-github-styles",
     "dbaeumer.vscode-eslint",
     "github.vscode-github-actions"
