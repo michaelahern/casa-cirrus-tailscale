@@ -1,5 +1,5 @@
 {
-  "servers": {
+  "mcpServers": {
     "AWS Knowledge": {
       "type": "http",
       "url": "https://knowledge-mcp.global.api.aws/"
@@ -8,7 +8,7 @@
       "type": "http",
       "url": "https://api.githubcopilot.com/mcp/",
       "headers": {
-        "Authorization": "Bearer ${env:GITHUB_TOKEN}",
+        "Authorization": "Bearer ${GITHUB_TOKEN}",
         "X-MCP-Readonly": "true"
       }
     }
