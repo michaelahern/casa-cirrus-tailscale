@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 
@@ -65,6 +66,12 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             enableRestartPolicy: true,
             restartAttemptPeriod: cdk.Duration.minutes(5)
         });
+
+        if (ecsTaskDefinition.executionRole) {
+            ecsTaskDefinition.executionRole.addManagedPolicy(
+                iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonEC2ContainerRegistryReadOnly')
+            );
+        }
 
         const ecsService = new ecs.FargateService(this, 'TailscaleService', {
             cluster: ecsCluster,
