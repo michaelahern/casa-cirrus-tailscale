@@ -57,6 +57,11 @@ jobs:
           aws-region: ${{ matrix.region }}
       - run: npm ci
       - run: npm run cdk deploy TailscaleExitNode
+      - name: Force Tailscale ECS Service Redeployment
+        run: |
+          CLUSTER_ARN=$(aws cloudformation list-stack-resources --stack-name TailscaleExitNode --query "StackResourceSummaries[?ResourceType=='AWS::ECS::Cluster'].PhysicalResourceId | [0]" --output text)
+          SERVICE_ARN=$(aws cloudformation list-stack-resources --stack-name TailscaleExitNode --query "StackResourceSummaries[?ResourceType=='AWS::ECS::Service'].PhysicalResourceId | [0]" --output text)
+          aws ecs update-service --cluster "$CLUSTER_ARN" --service "$SERVICE_ARN" --force-new-deployment
   deploy-router:
     needs: [ deploy-auth, deploy-policy, deploy-exit ]
     runs-on: ubuntu-latest
@@ -76,3 +81,8 @@ jobs:
           aws-region: ${{ matrix.region }}
       - run: npm ci
       - run: npm run cdk deploy TailscaleRouterNode
+      - name: Force Tailscale ECS Service Redeployment
+        run: |
+          CLUSTER_ARN=$(aws cloudformation list-stack-resources --stack-name TailscaleRouterNode --query "StackResourceSummaries[?ResourceType=='AWS::ECS::Cluster'].PhysicalResourceId | [0]" --output text)
+          SERVICE_ARN=$(aws cloudformation list-stack-resources --stack-name TailscaleRouterNode --query "StackResourceSummaries[?ResourceType=='AWS::ECS::Service'].PhysicalResourceId | [0]" --output text)
+          aws ecs update-service --cluster "$CLUSTER_ARN" --service "$SERVICE_ARN" --force-new-deployment
