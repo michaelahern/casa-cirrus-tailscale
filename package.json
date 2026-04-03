@@ -14,20 +14,21 @@
     "constructs": "^10"
   },
   "devDependencies": {
-    "@eslint/json": "^0",
-    "@eslint/markdown": "^7",
+    "@eslint/js": "^10",
+    "@eslint/json": "^1",
+    "@eslint/markdown": "^8",
     "@stylistic/eslint-plugin": "^5",
-    "@types/node": "^22",
+    "@types/node": "^24",
     "aws-cdk": "^2",
-    "eslint": "^9",
-    "eslint-plugin-jsonc": "^2",
-    "eslint-plugin-yml": "^1",
+    "eslint": "^10",
+    "eslint-plugin-jsonc": "^3",
+    "eslint-plugin-yml": "^3",
     "rimraf": "^6",
     "tsx": "^4",
-    "typescript": "~5.9",
+    "typescript": "~6.0",
     "typescript-eslint": "^8"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   }
 }
