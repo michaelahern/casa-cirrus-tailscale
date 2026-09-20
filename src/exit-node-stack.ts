@@ -33,7 +33,7 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             }
         });
 
-        ecsTaskDefinition.addContainer('Tailscale', {
+        const tailscale = ecsTaskDefinition.addContainer('Tailscale', {
             image: ecs.ContainerImage.fromRegistry('ghcr.io/tailscale/tailscale:latest'),
             environment: {
                 TS_ENABLE_HEALTH_CHECK: 'true',
@@ -67,9 +67,29 @@ export class TailscaleExitNodeStack extends cdk.Stack {
             restartAttemptPeriod: cdk.Duration.minutes(5)
         });
 
+        const cwagent = ecsTaskDefinition.addContainer('cwagent', {
+            image: ecs.ContainerImage.fromRegistry('public.ecr.aws/cloudwatch-agent/cloudwatch-agent:latest'),
+            environment: { CW_CONFIG_CONTENT: JSON.stringify({ opentelemetry: { collect: { otlp: {} } } }) },
+            logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'cwagent' })
+        });
+
+        tailscale.addContainerDependencies({
+            container: cwagent,
+            condition: ecs.ContainerDependencyCondition.START
+        });
+
         if (ecsTaskDefinition.executionRole) {
             ecsTaskDefinition.executionRole.addManagedPolicy(
                 iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonEC2ContainerRegistryReadOnly')
+            );
+        }
+
+        if (ecsTaskDefinition.taskRole) {
+            ecsTaskDefinition.taskRole.addManagedPolicy(
+                iam.ManagedPolicy.fromAwsManagedPolicyName('CloudWatchAgentServerPolicy')
+            );
+            ecsTaskDefinition.taskRole.addManagedPolicy(
+                iam.ManagedPolicy.fromAwsManagedPolicyName('AWSXRayDaemonWriteAccess')
             );
         }
 
