@@ -69,8 +69,13 @@ export class TailscaleExitNodeStack extends cdk.Stack {
 
         const cwagent = ecsTaskDefinition.addContainer('cwagent', {
             image: ecs.ContainerImage.fromRegistry('public.ecr.aws/cloudwatch-agent/cloudwatch-agent:latest'),
+            essential: false,
             environment: { CW_CONFIG_CONTENT: JSON.stringify({ opentelemetry: { collect: { otlp: {} } } }) },
-            logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'cwagent' })
+            logging: ecs.LogDrivers.awsLogs({
+                streamPrefix: 'cwagent',
+                logRetention: cdk.aws_logs.RetentionDays.ONE_MONTH,
+                mode: ecs.AwsLogDriverMode.NON_BLOCKING
+            })
         });
 
         tailscale.addContainerDependencies({
