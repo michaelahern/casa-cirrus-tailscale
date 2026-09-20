@@ -14,7 +14,7 @@ jobs:
     environment: auth
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 24.x
       - uses: aws-actions/configure-aws-credentials@v6
@@ -47,7 +47,7 @@ jobs:
     environment: ${{ matrix.region }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 24.x
       - uses: aws-actions/configure-aws-credentials@v6
@@ -71,7 +71,7 @@ jobs:
     environment: ${{ matrix.region }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 24.x
       - uses: aws-actions/configure-aws-credentials@v6
