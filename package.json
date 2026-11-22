@@ -16,8 +16,8 @@
   "devDependencies": {
     "@eslint/js": "^10",
     "@eslint/json": "^2",
-    "@eslint/markdown": "^8",
-    "@stylistic/eslint-plugin": "^5",
+    "@eslint/markdown": "^9",
+    "@stylistic/eslint-plugin": "^6",
     "@types/node": "^24",
     "aws-cdk": "^2",
     "eslint": "^10",
